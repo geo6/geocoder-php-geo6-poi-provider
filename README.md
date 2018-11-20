@@ -8,7 +8,7 @@
 
 > [Geocoder PHP](https://github.com/geocoder-php/Geocoder) is a PHP library which helps you build geo-aware applications by providing a powerful abstraction layer for geocoding manipulations.
 
-This is the "Geo-6" provider for the [Geocoder PHP](https://github.com/geocoder-php/Geocoder).
+This is the "Geo-6 POI" provider for the [Geocoder PHP](https://github.com/geocoder-php/Geocoder).
 
 **Coverage:** Belgium  
 **API:** <https://api.geo6.be/>
