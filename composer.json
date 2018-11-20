@@ -1,0 +1,42 @@
+{
+    "name": "geo6/geocoder-php-geo6-poi-provider",
+    "type": "library",
+    "description": "Geocoder Geo-6 POI adapter",
+    "keywords": [],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jonathan Beliën",
+            "email": "jbe@geo6.be"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "geocoder-php/common-http": "^4.1",
+        "willdurand/geocoder": "^4.0"
+    },
+    "provide": {
+        "geocoder-php/provider-implementation": "1.0"
+    },
+    "require-dev": {
+        "geocoder-php/provider-integration-tests": "^1.0",
+        "nyholm/psr7": "^0.2.2",
+        "php-http/curl-client": "^1.7",
+        "php-http/message": "^1.0",
+        "phpunit/phpunit": "6.3.* || 6.5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Geocoder\\Provider\\Geo6\\POI\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "test": "phpunit",
+        "test-ci": "phpunit --coverage-text --coverage-clover=build/coverage.xml"
+    }
+}
