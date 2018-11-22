@@ -25,8 +25,7 @@ class IntegrationTest extends ProviderIntegrationTest
     protected $testIpv6 = false;
 
     protected $skippedTests = [
-        'testGeocodeQuery'              => 'Belgium only.',
-        'testGeocodeQueryWithNoResults' => 'Does not support query without source at the moment.',
+        'testGeocodeQuery' => 'Belgium only.',
     ];
 
     protected function createProvider(HttpClient $httpClient)

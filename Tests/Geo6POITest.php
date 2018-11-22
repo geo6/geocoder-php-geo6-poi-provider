@@ -64,6 +64,36 @@ class Geo6POITest extends BaseTestCase
         $provider->reverseQuery(ReverseQuery::fromCoordinates(0, 0));
     }
 
+    public function testGeocodeQuery()
+    {
+        if (!isset($_SERVER['GEO6_CUSTOMER_ID']) || !isset($_SERVER['GEO6_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the GEO6_CUSTOMER_ID and GEO6_API_KEY value in phpunit.xml.dist');
+        }
+
+        $provider = new Geo6POI($this->getHttpClient(), $_SERVER['GEO6_CUSTOMER_ID'], $_SERVER['GEO6_API_KEY']);
+
+        $query = GeocodeQuery::create('Manneken Pis')
+            ->withLocale('fr');
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(2, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(50.844984, $result->getCoordinates()->getLatitude(), '', 0.00001);
+        $this->assertEquals(4.350012, $result->getCoordinates()->getLongitude(), '', 0.00001);
+        $this->assertEquals('MANNEKEN-PIS', $result->getName());
+        $this->assertThat(
+            $result->getType(),
+            $this->logicalOr(
+                $this->equalTo('Fontaines'),
+                $this->equalTo('Lieux réputés')
+            )
+        );
+    }
+
     public function testGeocodeQueryWithSource()
     {
         if (!isset($_SERVER['GEO6_CUSTOMER_ID']) || !isset($_SERVER['GEO6_API_KEY'])) {
