@@ -113,7 +113,14 @@ final class Geo6POI extends AbstractHttpProvider implements Provider
                     if (!is_null($poi_fr)) {
                         $results[] = $poi_fr;
                     }
-                    if (!is_null($poi_nl)) {
+                    if (
+                        !is_null($poi_nl) &&
+                        (
+                            $poi_nl->getCoordinates() != $poi_fr->getCoordinates() ||
+                            $poi_nl->getType() !== $poi_fr->getType() ||
+                            $poi_nl->getName() !== $poi_fr->getName()
+                        )
+                    ) {
                         $results[] = $poi_nl;
                     }
                     break;
