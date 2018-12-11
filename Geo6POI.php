@@ -32,7 +32,7 @@ use Http\Client\HttpClient;
  */
 final class Geo6POI extends AbstractHttpProvider implements Provider
 {
-    const GEOCODE_ENDPOINT_URL = 'https://api.geo6.be/';
+    const GEOCODE_ENDPOINT_URL = 'https://api-v2.geo6.be/';
 
     /**
      * @var string
@@ -82,11 +82,11 @@ final class Geo6POI extends AbstractHttpProvider implements Provider
 
         $url = rtrim(self::GEOCODE_ENDPOINT_URL, '/');
         if (!is_null($source) && !is_null($locality)) {
-            $url = sprintf($url.'/geocode/getPOI/%s/%s/%s', urlencode($source), urlencode($locality), urlencode($search));
+            $url = sprintf($url.'/geocode/getPOIList/%s/%s/%s', urlencode($source), urlencode($locality), urlencode($search));
         } elseif (!is_null($source)) {
-            $url = sprintf($url.'/geocode/getPOI/%s/%s', urlencode($source), urlencode($search));
+            $url = sprintf($url.'/geocode/getPOIList/%s/%s', urlencode($source), urlencode($search));
         } else {
-            $url = sprintf($url.'/geocode/getPOI/%s', urlencode($search));
+            $url = sprintf($url.'/geocode/getPOIList/%s', urlencode($search));
         }
         $json = $this->executeQuery($url);
 
@@ -187,7 +187,7 @@ final class Geo6POI extends AbstractHttpProvider implements Provider
         $t .= $time.'__';
         $t .= parse_url(self::GEOCODE_ENDPOINT_URL, PHP_URL_HOST).'__';
         $t .= 'GET'.'__';
-        $t .= '/geocode/getPOI';
+        $t .= '/geocode/getPOIList';
 
         $token = crypt($t, '$6$'.$this->privateKey.'$');
 
