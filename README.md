@@ -13,12 +13,13 @@ This is the "Geo-6 POI" provider for the [Geocoder PHP](https://github.com/geoco
 **Coverage:** Belgium
 **API:** <https://api-v2.geo6.be/>
 
-You will require a key to access this API. You can have a look at the available functionalities here : <https://api-v2.geo6.be/>.
-Please [contact us](https://geo6.be/contact.html) to ask for an access to this API.
+You will require a key to access this API. Please [contact us](https://geo6.be/contact.html) to ask for an access.
 
 ## Install
 
-    composer require geo6/geocoder-php-geo6-poi-provider
+```shell
+composer require geo6/geocoder-php-geo6-poi-provider
+```
 
 ## Usage
 
