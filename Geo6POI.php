@@ -175,11 +175,11 @@ final class Geo6POI extends AbstractHttpProvider implements Provider
 
             $request = $request->withHeader('Authorization', sprintf('Bearer %s', $token));
         } else {
-            $token = $this->getToken();
+            $token = $this->getGeo6Token();
 
             $request = $request->withHeader('X-Geo6-Consumer', $this->clientId);
-            $request = $request->withHeader('X-Geo6-Timestamp', (string) $token->time);
-            $request = $request->withHeader('X-Geo6-Token', $token->token);
+            $request = $request->withHeader('X-Geo6-Timestamp', (string) $token['time']);
+            $request = $request->withHeader('X-Geo6-Token', $token['token']);
         }
 
         $body = $this->getParsedResponse($request);
@@ -232,22 +232,27 @@ final class Geo6POI extends AbstractHttpProvider implements Provider
         $algorithmManager = AlgorithmManager::create([
             new HS512(),
         ]);
+
         $jwk = JWK::create([
             'kty' => 'oct',
             'k'   => $this->privateKey,
             'use' => 'sig',
         ]);
+
         $jsonConverter = new StandardConverter();
+
         $payload = $jsonConverter->encode([
             'aud' => 'GEO-6 API',
             'iat' => time(),
             'iss' => sprintf('geocoder-php-%s', $this->getName()),
             'sub' => $this->clientId,
         ]);
+
         $jwsBuilder = new JWSBuilder(
             $jsonConverter,
             $algorithmManager
         );
+
         $jws = $jwsBuilder
             ->create()
             ->withPayload($payload)
