@@ -220,7 +220,7 @@ final class Geo6POI extends AbstractHttpProvider implements Provider
         ];
     }
 
-        /**
+    /**
      * Generate JSON Web Token needed to query API.
      *
      * @see https://jwt.io/
@@ -253,6 +253,7 @@ final class Geo6POI extends AbstractHttpProvider implements Provider
             ->withPayload($payload)
             ->addSignature($jwk, ['alg' => 'HS512', 'typ' => 'JWT'])
             ->build();
+
         return (new CompactSerializer($jsonConverter))->serialize($jws);
     }
 
