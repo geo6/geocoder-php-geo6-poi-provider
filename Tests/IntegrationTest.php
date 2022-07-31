@@ -12,7 +12,7 @@ namespace Geocoder\Provider\Geo6POI\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\Geo6\POI\Geo6POI;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 class IntegrationTest extends ProviderIntegrationTest
 {
@@ -28,7 +28,7 @@ class IntegrationTest extends ProviderIntegrationTest
         'testGeocodeQuery' => 'Belgium only.',
     ];
 
-    protected function createProvider(HttpClient $httpClient)
+    protected function createProvider(ClientInterface $httpClient)
     {
         return new Geo6POI($httpClient, $this->getCustomerId(), $this->getApiKey());
     }
