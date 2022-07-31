@@ -24,7 +24,6 @@ use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Jose\Component\Core\AlgorithmManager;
-use Jose\Component\Core\Converter\StandardConverter;
 use Jose\Component\Core\JWK;
 use Jose\Component\Signature\Algorithm\HS512;
 use Jose\Component\Signature\JWSBuilder;
@@ -227,29 +226,24 @@ final class Geo6POI extends AbstractHttpProvider implements Provider
      */
     private function getJWT(): string
     {
-        $algorithmManager = AlgorithmManager::create([
+        $algorithmManager = new AlgorithmManager([
             new HS512(),
         ]);
 
-        $jwk = JWK::create([
+        $jwk = new JWK([
             'kty' => 'oct',
             'k'   => $this->privateKey,
             'use' => 'sig',
         ]);
 
-        $jsonConverter = new StandardConverter();
-
-        $payload = $jsonConverter->encode([
+        $payload = json_encode([
             'aud' => 'GEO-6 API',
             'iat' => time(),
             'iss' => sprintf('geocoder-php-%s', $this->getName()),
             'sub' => $this->clientId,
         ]);
 
-        $jwsBuilder = new JWSBuilder(
-            $jsonConverter,
-            $algorithmManager
-        );
+        $jwsBuilder = new JWSBuilder($algorithmManager);
 
         $jws = $jwsBuilder
             ->create()
@@ -257,7 +251,7 @@ final class Geo6POI extends AbstractHttpProvider implements Provider
             ->addSignature($jwk, ['alg' => 'HS512', 'typ' => 'JWT'])
             ->build();
 
-        return (new CompactSerializer($jsonConverter))->serialize($jws);
+        return (new CompactSerializer())->serialize($jws);
     }
 
     /**
