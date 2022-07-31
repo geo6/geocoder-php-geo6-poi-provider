@@ -20,7 +20,6 @@ use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
-use Geocoder\Model\Country;
 use Geocoder\Provider\Geo6\POI\Model\POI;
 use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
@@ -202,7 +201,7 @@ final class Geo6POI extends AbstractHttpProvider implements Provider
      *
      * @return array
      */
-    private function getGeo6Token(string $path) : array
+    private function getGeo6Token(string $path): array
     {
         $time = time();
 
@@ -227,7 +226,7 @@ final class Geo6POI extends AbstractHttpProvider implements Provider
      *
      * @return string
      */
-    private function getJWT() : string
+    private function getJWT(): string
     {
         $algorithmManager = AlgorithmManager::create([
             new HS512(),
